@@ -1,0 +1,4 @@
+class Addmobiletocontacts < ActiveRecord::Migration
+  def change
+  end
+end
