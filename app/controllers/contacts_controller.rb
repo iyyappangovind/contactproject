@@ -1,10 +1,11 @@
 class ContactsController < ApplicationController
+  
   before_action :set_contact, only: [:show, :edit, :update, :destroy]
 
   # GET /contacts
   # GET /contacts.json
   def index
-    @contacts = Contact.all
+      @contacts = Contact.where(user_id: params[:id])
   end
 
   # GET /contacts/1
@@ -23,19 +24,19 @@ class ContactsController < ApplicationController
 
   # POST /contacts
   # POST /contacts.json
-  def create
-    @contact = Contact.new(contact_params)
+    def create
+     @contact = Contact.new(contact_params)
 
-    respond_to do |format|
+     respond_to do |format|
       if @contact.save
         format.html { redirect_to @contact, notice: 'Contact was successfully created.' }
         format.json { render :show, status: :created, location: @contact }
-      else
-        format.html { render :new }
-        format.json { render json: @contact.errors, status: :unprocessable_entity }
+        else
+          format.html { render :new }
+         format.json { render json: @contact.errors, status: :unprocessable_entity }
+        end
       end
     end
-  end
 
   # PATCH/PUT /contacts/1
   # PATCH/PUT /contacts/1.json
@@ -70,5 +71,6 @@ class ContactsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def contact_params
       params.require(:contact).permit(:name, :phone, :address)
+
     end
 end
